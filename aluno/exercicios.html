@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Exercícios</title>
+
+    <link rel="stylesheet" href="exercicios.css">
+</head>
+
+<body>
+
+    <!-- Somente apresentação -->
+
+    <?php foreach ($exercicios as $exercicio): ?>
+
+        <h2>
+            <?= htmlspecialchars($exercicio["pergunta"]) ?>
+        </h2>
+
+    <?php endforeach; ?>
+
+</body>
+
+</html>

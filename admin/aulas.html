@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Aulas - English Academy</title>
+    <link rel="stylesheet" href="aulas.css">
+</head>
+<body>
+    <div class="container">
+        <div class="topo">
+            <div>
+                <h1>📚 Gerenciar Aulas</h1>
+                <p>Cadastre e visualize as aulas do curso.</p>
+            </div>
+            <a href="dashboard.php" class="voltar">← Voltar ao Dashboard</a>
+        </div>
+
+        <?php if (!empty($mensagem)): ?>
+            <div class="mensagem"><?= htmlspecialchars($mensagem) ?></div>
+        <?php endif; ?>
+
+        <?php if (!empty($erro)): ?>
+            <div class="erro"><?= htmlspecialchars($erro) ?></div>
+        <?php endif; ?>
+
+        <div class="card">
+            <h2>➕ Cadastrar nova aula</h2>
+            <form method="POST">
+                <div class="campo">
+                    <label for="modulo_id">Módulo</label>
+                    <select name="modulo_id" id="modulo_id" required>
+                        <option value="">Selecione um módulo</option>
+                        <?php foreach ($modulos as $modulo): ?>
+                            <option value="<?= $modulo["id"] ?>">Módulo <?= $modulo["numero"] ?> - <?= htmlspecialchars($modulo["nome"]) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="titulo">Título da aula</label>
+                    <input type="text" name="titulo" id="titulo" placeholder="Ex: Greetings and Introductions" required>
+                </div>
+
+                <div class="campo">
+                    <label for="descricao">Descrição da aula</label>
+                    <textarea name="descricao" id="descricao" placeholder="Digite uma descrição sobre o conteúdo da aula..."></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="video_url">Link do vídeo</label>
+                    <input type="url" name="video_url" id="video_url" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+
+                <div class="campo">
+                    <label for="duracao">Duração (em minutos)</label>
+                    <input type="number" name="duracao" id="duracao" min="0" value="0">
+                </div>
+
+                <button type="submit" class="botao">Cadastrar Aula</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>📖 Aulas cadastradas</h2>
+
+            <?php if (count($aulas) === 0): ?>
+                <div class="sem-aulas">Nenhuma aula cadastrada ainda.</div>
+            <?php else: ?>
+                <div class="tabela-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Módulo</th>
+                                <th>Aula</th>
+                                <th>Duração</th>
+                                <th>Vídeo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($aulas as $aula): ?>
+                                <tr>
+                                    <td><?= $aula["id"] ?></td>
+                                    <td>
+                                        <span class="modulo">Módulo <?= $aula["numero"] ?></span><br>
+                                        <?= htmlspecialchars($aula["modulo_nome"]) ?>
+                                    </td>
+                                    <td><?= htmlspecialchars($aula["titulo"]) ?></td>
+                                    <td><?= (int) $aula["duracao"] ?> min</td>
+                                    <td>
+                                        <?php if (!empty($aula["video_url"])): ?>
+                                            <a href="<?= htmlspecialchars($aula["video_url"]) ?>" target="_blank" class="video">Assistir</a>
+                                        <?php else: ?>
+                                            —
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</body>
+</html>

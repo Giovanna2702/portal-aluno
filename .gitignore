@@ -1,0 +1,31 @@
+# Configurações locais
+.env
+
+# Banco local
+*.sql
+
+# XAMPP
+xampp/
+
+# Logs
+*.log
+
+# Cache
+cache/
+tmp/
+
+# Uploads dos usuários
+uploads/*
+!uploads/.gitkeep
+
+# Arquivos do Windows
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Dependências
+vendor/
+node_modules/

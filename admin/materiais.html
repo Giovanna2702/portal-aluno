@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiais - English Academy</title>
+    <link rel="stylesheet" href="materiais.css">
+</head>
+<body>
+    <main class="container">
+        <div class="topo">
+            <div>
+                <h1>📎 Materiais</h1>
+                <p>Envie materiais de apoio vinculados aos módulos.</p>
+            </div>
+            <a class="voltar" href="dashboard.php">← Dashboard</a>
+        </div>
+
+        <?php if ($mensagem): ?>
+            <div class="mensagem sucesso"><?= htmlspecialchars($mensagem) ?></div>
+        <?php endif; ?>
+        <?php if ($erro): ?>
+            <div class="mensagem erro"><?= htmlspecialchars($erro) ?></div>
+        <?php endif; ?>
+
+        <section class="card">
+            <h2><?= $edicao ? "Editar material" : "Novo material" ?></h2>
+            <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                <input type="hidden" name="acao" value="salvar">
+                <input type="hidden" name="id" value="<?= (int) ($edicao["id"] ?? 0) ?>">
+
+                <div class="grid">
+                    <div class="campo">
+                        <label for="modulo_id">Módulo *</label>
+                        <select id="modulo_id" name="modulo_id" required>
+                            <option value="">Selecione</option>
+                            <?php foreach ($modulos as $modulo): ?>
+                                <option value="<?= (int) $modulo["id"] ?>" <?= (string) ($edicao["modulo_id"] ?? "") === (string) $modulo["id"] ? "selected" : "" ?>>
+                                    Módulo <?= (int) $modulo["numero"] ?> - <?= htmlspecialchars($modulo["nome"]) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="tipo">Tipo</label>
+                        <select id="tipo" name="tipo">
+                            <?php foreach (["material" => "Material", "livro" => "Livro", "audio" => "Áudio", "resumo" => "Resumo"] as $valor => $rotulo): ?>
+                                <option value="<?= $valor ?>" <?= ($edicao["tipo"] ?? "material") === $valor ? "selected" : "" ?>><?= $rotulo ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="titulo">Título *</label>
+                    <input id="titulo" type="text" name="titulo" value="<?= htmlspecialchars($edicao["titulo"] ?? "") ?>" required>
+                </div>
+
+                <div class="campo">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao"><?= htmlspecialchars($edicao["descricao"] ?? "") ?></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="arquivo">Arquivo <?= $edicao ? "(opcional ao editar)" : "*" ?></label>
+                    <input id="arquivo" type="file" name="arquivo" accept=".pdf,.txt,.mp3,.m4a" <?= $edicao ? "" : "required" ?>>
+                    <small>Permitidos: PDF, TXT, MP3 e M4A. Máximo de 10 MB.</small>
+                    <?php if (!empty($edicao["arquivo"])): ?>
+                        <div class="arquivo-atual">Arquivo atual: <?= htmlspecialchars($edicao["arquivo"]) ?></div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="acoes-form">
+                    <button class="botao" type="submit" title="<?= $edicao ? "Salvar alterações" : "Cadastrar material" ?>">
+                        <span><?= $edicao ? "Salvar alterações" : "Cadastrar material" ?></span>
+                    </button>
+                    <?php if ($edicao): ?>
+                        <a class="botao secundario" href="materiais.php">Cancelar edição</a>
+                    <?php endif; ?>
+                </div>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Materiais cadastrados</h2>
+            <?php if (!$materiais): ?>
+                <p class="vazio">Nenhum material cadastrado.</p>
+            <?php else: ?>
+                <div class="tabela-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Módulo</th>
+                                <th>Título</th>
+                                <th>Tipo</th>
+                                <th>Arquivo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($materiais as $material): ?>
+                                <tr>
+                                    <td>Módulo <?= (int) $material["numero"] ?></td>
+                                    <td><?= htmlspecialchars($material["titulo"]) ?></td>
+                                    <td><?= htmlspecialchars($material["tipo"]) ?></td>
+                                    <td><a href="material-download.php?id=<?= (int) $material["id"] ?>">Baixar</a></td>
+                                    <td class="acoes">
+                                        <a href="materiais.php?editar=<?= (int) $material["id"] ?>">Editar</a>
+                                        <form method="POST">
+                                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                                            <input type="hidden" name="acao" value="excluir">
+                                            <input type="hidden" name="id" value="<?= (int) $material["id"] ?>">
+                                            <button class="link-perigo" type="submit">Excluir</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </section>
+    </main>
+</body>
+</html>

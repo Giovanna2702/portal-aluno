@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios - English Academy</title><link rel="stylesheet" href="exercicios.css">
+</head>
+<body>
+    <aside class="sidebar"><div class="logo"><h2>📚 English Academy</h2><p>Área do Aluno</p></div><nav class="menu"><a href="dashboard.php">🏠 Dashboard</a><a href="aulas.php">📚 Minhas Aulas</a><a href="exercicios.php" class="ativo">📝 Exercícios</a><a href="materiais.php">📖 Materiais</a><a href="progresso.php">📊 Meu Progresso</a><a href="perfil.php">👤 Meu Perfil</a><a href="mensalidades.php">💳 Mensalidades</a><a href="avisos.php">📢 Avisos</a><a href="../login/logout.php" class="sair">🚪 Sair</a></nav></aside>
+    <main class="conteudo">
+        <header class="topo"><h1>📝 Exercícios</h1><p>Responda aos exercícios dos módulos já liberados.</p></header>
+        <?php if ($mensagem): ?><div class="mensagem sucesso" role="status"><?= htmlspecialchars($mensagem, ENT_QUOTES, 'UTF-8') ?></div><?php endif; ?>
+        <?php if ($erro): ?><div class="mensagem erro" role="alert"><?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8') ?></div><?php endif; ?>
+
+        <?php if (!$modulos): ?>
+            <div class="vazio">Nenhum exercício disponível.</div>
+        <?php endif; ?>
+
+        <?php foreach ($modulos as $modulo): ?>
+            <section class="modulo">
+                <header><span>MÓDULO <?= (int) $modulo['numero'] ?></span><h2><?= htmlspecialchars($modulo['nome'], ENT_QUOTES, 'UTF-8') ?></h2></header>
+                <?php foreach ($modulo['exercicios'] as $exercicio): ?>
+                    <article class="exercicio">
+                        <h3><?= htmlspecialchars($exercicio['pergunta'], ENT_QUOTES, 'UTF-8') ?></h3>
+                        <?php if ($exercicio['resposta_aluno'] !== null): ?>
+                            <p class="resultado <?= (int) $exercicio['acertou'] === 1 ? 'certo' : 'errado' ?>">
+                                Última resposta: <?= htmlspecialchars($exercicio['resposta_aluno'], ENT_QUOTES, 'UTF-8') ?> — <?= (int) $exercicio['acertou'] === 1 ? 'correta' : 'incorreta' ?>
+                            </p>
+                        <?php endif; ?>
+                        <form method="POST" action="exercicios.php">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                            <input type="hidden" name="exercicio_id" value="<?= (int) $exercicio['id'] ?>">
+                            <?php foreach (['A','B','C','D'] as $letra): ?>
+                                <?php $campo = 'alternativa_' . strtolower($letra); ?>
+                                <label class="alternativa"><input type="radio" name="resposta" value="<?= $letra ?>" required> <strong><?= $letra ?>.</strong> <?= htmlspecialchars($exercicio[$campo], ENT_QUOTES, 'UTF-8') ?></label>
+                            <?php endforeach; ?>
+                            <button type="submit">Responder</button>
+                        </form>
+                    </article>
+                <?php endforeach; ?>
+            </section>
+        <?php endforeach; ?>
+    </main>
+</body>
+</html>

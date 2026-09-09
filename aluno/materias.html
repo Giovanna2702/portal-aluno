@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Materiais - English Academy</title><link rel="stylesheet" href="materiais.css"></head>
+<body>
+<aside class="sidebar"><div class="logo"><h2>📚 English Academy</h2><p>Área do Aluno</p></div><nav class="menu"><a href="dashboard.php">🏠 Dashboard</a><a href="aulas.php">📚 Minhas Aulas</a><a href="exercicios.php">📝 Exercícios</a><a href="materiais.php" class="ativo">📖 Materiais</a><a href="progresso.php">📊 Meu Progresso</a><a href="perfil.php">👤 Meu Perfil</a><a href="mensalidades.php">💳 Mensalidades</a><a href="avisos.php">📢 Avisos</a><a href="../login/logout.php" class="sair">🚪 Sair</a></nav></aside>
+<main class="conteudo"><header class="topo"><h1>📖 Materiais de apoio</h1><p>Arquivos disponíveis nos módulos já liberados.</p></header>
+<?php if (!$materiais): ?><div class="vazio">Nenhum material disponível.</div><?php else: ?><section class="grade">
+<?php foreach ($materiais as $material): ?><article class="card"><span>MÓDULO <?= (int) $material['numero'] ?></span><h2><?= htmlspecialchars($material['titulo'], ENT_QUOTES, 'UTF-8') ?></h2><p class="modulo-nome"><?= htmlspecialchars($material['modulo_nome'], ENT_QUOTES, 'UTF-8') ?></p><p><?= nl2br(htmlspecialchars($material['descricao'] ?? '', ENT_QUOTES, 'UTF-8')) ?></p><small>Tipo: <?= htmlspecialchars($material['tipo'], ENT_QUOTES, 'UTF-8') ?></small><a class="botao" href="material-download.php?id=<?= (int) $material['id'] ?>">Baixar material</a></article><?php endforeach; ?>
+</section><?php endif; ?></main>
+</body></html>

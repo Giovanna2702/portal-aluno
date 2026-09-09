@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Academy — Portal do Aluno</title>
+<style>
+:root{--primary:#6c4cf6;--primary2:#8d70ff;--bg:#f6f7fb;--card:#fff;--text:#202236;--muted:#777b91;--line:#e9eaf1;--success:#28a36a;--warning:#e9a52f}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.app{display:flex;min-height:100vh}.sidebar{width:250px;background:#17162a;color:#fff;padding:24px 16px;position:fixed;height:100vh}
+.hidden{display:none}.muted{color:#777b91}.module-filter{width:180px;padding:9px;border:1px solid #ddd;border-radius:8px}.progress-narrow{width:300px;margin-top:8px}.progress-42{width:42%}.progress-65{width:65%}
+.logo{font-size:22px;font-weight:800;padding:8px 12px 28px}.logo span{color:#9b83ff}
+.nav button{width:100%;border:0;background:none;color:#bfc0cf;text-align:left;padding:13px 14px;margin:3px 0;border-radius:10px;font-size:14px;cursor:pointer}.nav button:hover,.nav button.active{background:#2a2744;color:#fff}.nav .icon{display:inline-block;width:26px}
+.main{margin-left:250px;width:calc(100% - 250px);padding:28px 34px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}.welcome h1{margin:0 0 6px;font-size:26px}.welcome p{margin:0;color:var(--muted)}.profile-mini{display:flex;gap:10px;align-items:center}.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#b19cff);display:grid;place-items:center;color:white;font-weight:700}
+.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:20px;box-shadow:0 3px 14px rgba(30,25,70,.03)}.stat small{color:var(--muted)}.stat strong{display:block;font-size:26px;margin:8px 0}.progress{height:8px;background:#ececf3;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--primary2));border-radius:99px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:28px 0 14px}.section-title h2{font-size:18px;margin:0}.module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.module h3{margin:5px 0}.module p{color:var(--muted);font-size:13px;line-height:1.5}.tag{font-size:11px;color:var(--primary);background:#f0edff;padding:5px 8px;border-radius:20px;display:inline-block}.btn{border:0;background:var(--primary);color:#fff;padding:10px 14px;border-radius:9px;cursor:pointer;font-weight:600}.btn.secondary{background:#f0edff;color:var(--primary)}.list{display:grid;gap:10px}.item{display:flex;justify-content:space-between;align-items:center;padding:15px;background:#fff;border:1px solid var(--line);border-radius:12px}.item-left{display:flex;gap:13px;align-items:center}.circle{width:38px;height:38px;border-radius:10px;background:#f0edff;color:var(--primary);display:grid;place-items:center;font-weight:700}.item h4{margin:0 0 4px}.item p{margin:0;color:var(--muted);font-size:12px}.lesson-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.lesson{padding:18px}.lesson-top{display:flex;justify-content:space-between}.lesson .time{font-size:12px;color:var(--muted)}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:14px;border-bottom:1px solid var(--line);font-size:13px}.status{font-size:11px;padding:5px 8px;border-radius:20px;background:#e9f8f0;color:var(--success)}.notice{border-left:4px solid var(--primary)}.profile{max-width:800px}.field{margin-bottom:16px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:#fafafe}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}.payment{display:flex;justify-content:space-between;align-items:center}.price{font-size:24px;font-weight:800}.paid{color:var(--success);font-weight:700}.admin-banner{background:#17162a;color:white;border-radius:16px;padding:22px;margin-bottom:20px}.admin-banner h2{margin:0 0 5px}.role{position:fixed;bottom:20px;left:20px;width:210px;background:#24213c;padding:10px;border-radius:10px;color:#fff}.role select{width:100%;margin-top:5px;padding:7px;border-radius:7px}
+@media(max-width:900px){.sidebar{width:75px}.logo{font-size:0}.logo span{font-size:20px}.nav button{font-size:0;text-align:center}.nav .icon{font-size:18px}.main{margin-left:75px;width:calc(100% - 75px);padding:20px}.grid{grid-template-columns:repeat(2,1fr)}.module-grid,.lesson-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="logo">English<span>Academy</span></div>
+  <div class="nav" id="studentNav">
+    <button class="active" onclick="showPage('inicio',this)">⌂ <span class="icon"></span>Início</button>
+    <button onclick="showPage('aulas',this)">▶ <span class="icon"></span>Minhas aulas</button>
+    <button onclick="showPage('exercicios',this)">✓ <span class="icon"></span>Exercícios</button>
+    <button onclick="showPage('materiais',this)">▣ <span class="icon"></span>Materiais</button>
+    <button onclick="showPage('progresso',this)">◔ <span class="icon"></span>Meu progresso</button>
+    <button onclick="showPage('perfil',this)">♙ <span class="icon"></span>Meu perfil</button>
+    <button onclick="showPage('mensalidades',this)">R$ <span class="icon"></span>Mensalidades</button>
+  </div>
+  <div class="nav hidden" id="adminNav">
+    <button class="active" onclick="showPage('admin',this)">⌂ <span class="icon"></span>Dashboard</button>
+    <button onclick="showPage('alunos',this)">♙ <span class="icon"></span>Alunos</button>
+    <button onclick="showPage('admin-aulas',this)">▶ <span class="icon"></span>Aulas</button>
+    <button onclick="showPage('admin-exercicios',this)">✓ <span class="icon"></span>Exercícios</button>
+    <button onclick="showPage('avisos',this)">! <span class="icon"></span>Avisos</button>
+    <button onclick="showPage('config',this)">⚙ <span class="icon"></span>Configurações</button>
+  </div>
+</aside>
+
+<main class="main">
+<div class="top">
+  <div class="welcome"><h1 id="pageTitle">Olá, Giovanna! 👋</h1><p id="pageSubtitle">Continue sua jornada no inglês.</p></div>
+  <div class="profile-mini"><div><b>Giovanna Silva</b><br><small class="muted">Aluno</small></div><div class="avatar">GS</div></div>
+</div>
+
+<section id="inicio" class="page active">
+<div class="grid">
+ <div class="card stat"><small>Progresso geral</small><strong>42%</strong><div class="progress"><i class="progress-42"></i></div></div>
+ <div class="card stat"><small>Aulas concluídas</small><strong>18</strong><small>de 43 aulas</small></div>
+ <div class="card stat"><small>Exercícios</small><strong>76%</strong><small>média de acertos</small></div>
+ <div class="card stat"><small>Próxima mensalidade</small><strong>10/09</strong><small class="paid">Em dia</small></div>
+</div>
+<div class="section-title"><h2>Continue estudando</h2><button class="btn secondary" onclick="showPage('aulas')">Ver todas</button></div>
+<div class="card">
+ <span class="tag">Módulo 2 • Daily Routine</span><h3>Simple Present</h3><p class="muted">Aprenda a falar sobre hábitos, rotina e frequência usando o Simple Present.</p>
+ <div class="progress"><i class="progress-65"></i></div><br><button class="btn" onclick="showPage('aulas')">Continuar aula</button>
+</div>
+<div class="section-title"><h2>Seus módulos</h2></div>
+<div class="module-grid" id="moduleCards"></div>
+</section>
+
+<section id="aulas" class="page"><div class="section-title"><h2>Minhas aulas</h2><select class="field module-filter" aria-label="Filtrar aulas por módulo" onchange="filterModules(this.value)"><option value="all">Todos os módulos</option><option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option><option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option></select></div><div class="lesson-grid" id="lessons"></div></section>
+
+<section id="exercicios" class="page"><div class="section-title"><h2>Exercícios</h2></div><div class="list" id="exerciseList"></div></section>
+
+<section id="materiais" class="page"><div class="section-title"><h2>Materiais de apoio</h2></div><div class="module-grid" id="materials"></div></section>
+
+<section id="progresso" class="page"><div class="card"><h2>Meu progresso</h2><p class="muted">Acompanhe sua evolução em cada módulo.</p><div class="list" id="progressList"></div></div></section>
+
+<section id="perfil" class="page"><div class="card profile"><h2>Meu perfil</h2><div class="two"><div class="field"><label>Nome completo</label><input value="Giovanna Silva"></div><div class="field"><label>CPF</label><input value="000.000.000-00"></div></div><div class="two"><div class="field"><label>E-mail</label><input value="giovanna@email.com"></div><div class="field"><label>Plano</label><select><option>Plano Completo</option><option>Plano Básico</option></select></div></div><button class="btn">Salvar alterações</button></div></section>
+
+<section id="mensalidades" class="page"><div class="card payment"><div><small class="muted">Mensalidade de Setembro</small><div class="price">R$ 149,90</div><span class="paid">● Vencimento 10/09/2026</span></div><button class="btn">Pagar mensalidade</button></div><div class="section-title"><h2>Histórico</h2></div><div class="card"><table class="table"><tr><th>Mês</th><th>Valor</th><th>Data</th><th>Status</th></tr><tr><td>Agosto/2026</td><td>R$ 149,90</td><td>10/08/2026</td><td><span class="status">Pago</span></td></tr><tr><td>Julho/2026</td><td>R$ 149,90</td><td>10/07/2026</td><td><span class="status">Pago</span></td></tr></table></div></section>
+
+<section id="admin" class="page"><div class="admin-banner"><h2>Dashboard administrativo</h2><p>Visão geral do curso e dos alunos.</p></div><div class="grid"><div class="card stat"><small>Alunos efetivados</small><strong>38</strong><small>matrículas pagas</small></div><div class="card stat"><small>Alunos ativos</small><strong>34</strong></div><div class="card stat"><small>Progresso médio</small><strong>57%</strong></div><div class="card stat"><small>Receita mensal</small><strong>R$ 5.692</strong></div></div></section>
+
+<section id="alunos" class="page"><div class="section-title"><h2>Alunos</h2><button class="btn">+ Novo aluno</button></div><div class="card"><table class="table"><tr><th>Aluno</th><th>Status</th><th>Módulo</th><th>Progresso</th></tr><tr><td>Giovanna Silva</td><td><span class="status">Efetivado</span></td><td>2</td><td>42%</td></tr><tr><td>Lucas Almeida</td><td><span class="status">Efetivado</span></td><td>4</td><td>68%</td></tr><tr><td>Mariana Souza</td><td><span class="status">Efetivado</span></td><td>1</td><td>21%</td></tr></table></div></section>
+
+<section id="admin-aulas" class="page"><div class="section-title"><h2>Gerenciar aulas</h2><button class="btn">+ Lançar aula</button></div><div class="list"><div class="item"><div class="item-left"><div class="circle">01</div><div><h4>Greetings — Cumprimentos</h4><p>Módulo 1 • Vídeo • 18 min</p></div></div><span class="status">Publicada</span></div><div class="item"><div class="item-left"><div class="circle">02</div><div><h4>Simple Present</h4><p>Módulo 2 • Vídeo • 25 min</p></div></div><span class="status">Publicada</span></div></div></section>
+
+<section id="admin-exercicios" class="page"><div class="section-title"><h2>Gerenciar exercícios</h2><button class="btn">+ Novo exercício</button></div><div class="list"><div class="item"><div><h4>Exercícios — Personal Information</h4><p>Módulo 1 • 10 questões</p></div><button class="btn secondary">Editar</button></div><div class="item"><div><h4>Exercícios — Simple Present</h4><p>Módulo 2 • 15 questões</p></div><button class="btn secondary">Editar</button></div></div></section>
+
+<section id="avisos" class="page"><div class="section-title"><h2>Avisos</h2><button class="btn">+ Novo aviso</button></div><div class="card notice"><h3>Bem-vindos ao novo módulo!</h3><p class="muted">As aulas do Módulo 2 já estão disponíveis. Não deixe de realizar os exercícios.</p><small>Publicado hoje</small></div></section>
+
+<section id="config" class="page"><div class="card profile"><h2>Configurações</h2><div class="field"><label>Nome da escola</label><input value="English Academy"></div><div class="field"><label>E-mail administrativo</label><input value="contato@englishacademy.com"></div><button class="btn">Salvar configurações</button></div></section>
+</main>
+</div>
+
+<div class="role">Visualizar como:<select aria-label="Visualizar portal como" onchange="switchRole(this.value)"><option value="student">Aluno</option><option value="admin">Administrador</option></select></div>
+
+<script>
+const modules=[
+["1","Fundamentos","Greetings, Introductions, Alphabet, Numbers, Days and months, Personal information, Family, Countries and nationalities, Verb to be, Pronomes pessoais, Artigos","78%"],
+["2","Daily Routine","Daily routine, Telling the time, Simple Present, Do / Does, Hábitos e frequência, Family and friends, Jobs and professions, Places, Everyday vocabulary, Perguntas básicas","42%"],
+["3","Simple Past","Simple Past, Regular and irregular verbs, Was / Were, Yesterday, last week, last year, Hobbies, Weekend activities, Viagens, Experiências pessoais","18%"],
+["4","Future & Everyday English","Future with will, Going to, Plans and predictions, Professions and career, Travel, Shopping, Restaurants, Making plans, Convites","0%"],
+["5","Vocabulary & Conversation","Vocabulary, Describing people, Describing places, Giving opinions, Agreeing and disagreeing, Asking for information, Situational English, Expressões comuns","0%"],
+["6","Revisão Geral","Revisão geral, Conversação, Listening, Reading, Writing, Situações de viagem, Entrevista de emprego, Conversas do cotidiano, Revisão de gramática, Vocabulário, Avaliação final","0%"]
+];
+const topics=["Greetings — Cumprimentos","Introductions — Apresentações","Alphabet","Numbers & Days","Personal Information","Family & Countries","Verb to be","Daily Routine","Telling the Time","Simple Present","Do / Does","Habits & Frequency","Simple Past","Regular & Irregular Verbs","Was / Were","Future with Will","Going to","Plans & Predictions","Professions & Career","Travel & Shopping","Vocabulary","Describing People & Places","Giving Opinions","Situational English","Review & Final Evaluation"];
+function render(){
+ document.getElementById("moduleCards").innerHTML=modules.map(m=>`<div class="card module"><span class="tag">Módulo ${m[0]}</span><h3>${m[1]}</h3><p>${m[2]}</p><div class="progress"><i style="width:${m[3]}"></i></div><small style="color:#777b91">${m[3]} concluído</small></div>`).join("");
+ document.getElementById("lessons").innerHTML=topics.map((t,i)=>`<div class="card lesson" data-module="${Math.min(6,Math.floor(i/4)+1)}"><div class="lesson-top"><span class="tag">Módulo ${Math.min(6,Math.floor(i/4)+1)}</span><span class="time">${15+i%3*5} min</span></div><h3>${t}</h3><p style="color:#777b91">Aula em vídeo + material complementar.</p><button class="btn secondary">Assistir aula</button></div>`).join("");
+ document.getElementById("exerciseList").innerHTML=modules.map(m=>`<div class="item"><div class="item-left"><div class="circle">M${m[0]}</div><div><h4>Exercícios — ${m[1]}</h4><p>Questões de fixação do Módulo ${m[0]}</p></div></div><button class="btn">Começar</button></div>`).join("");
+ document.getElementById("materials").innerHTML=modules.map(m=>`<div class="card module"><span class="tag">Módulo ${m[0]}</span><h3>Material de apoio</h3><p>PDF, vocabulário, resumo e conteúdo complementar de ${m[1]}.</p><button class="btn secondary">Abrir materiais</button></div>`).join("");
+ document.getElementById("progressList").innerHTML=modules.map(m=>`<div class="item"><div><b>Módulo ${m[0]} — ${m[1]}</b><div class="progress" style="width:300px;margin-top:8px"><i style="width:${m[3]}"></i></div></div><b>${m[3]}</b></div>`).join("");
+}
+function showPage(id,btn){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));if(btn)btn.classList.add("active");
+ const titles={inicio:["Olá, Giovanna! 👋","Continue sua jornada no inglês."],aulas:["Minhas aulas","Aulas organizadas por módulo."],exercicios:["Exercícios","Pratique o conteúdo estudado."],materiais:["Materiais","Tudo o que você precisa para estudar."],progresso:["Meu progresso","Acompanhe sua evolução."],perfil:["Meu perfil","Seus dados cadastrais."],mensalidades:["Mensalidades","Consulte e pague suas mensalidades."],admin:["Dashboard","Visão geral da plataforma."],alunos:["Alunos","Acompanhe matrículas e progresso."],"admin-aulas":["Aulas","Programe e publique aulas."],"admin-exercicios":["Exercícios","Crie e gerencie atividades."],avisos:["Avisos","Comunique-se com os alunos."],config:["Configurações","Configurações da plataforma."]};
+ if(titles[id]){pageTitle.textContent=titles[id][0];pageSubtitle.textContent=titles[id][1]}
+}
+function switchRole(role){
+ document.getElementById("studentNav").style.display=role==="student"?"block":"none";document.getElementById("adminNav").style.display=role==="admin"?"block":"none";
+ showPage(role==="student"?"inicio":"admin",document.querySelector(role==="student"?"#studentNav button":"#adminNav button"));
+}
+function filterModules(v){document.querySelectorAll(".lesson").forEach(x=>x.style.display=(v==="all"||x.dataset.module===v)?"block":"none")}
+render();
+</script>
+</body>
+</html>

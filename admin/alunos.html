@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos - English Academy</title>
+    <link rel="stylesheet" href="alunos.css">
+</head>
+<body>
+    <div class="container">
+        <a class="voltar" href="dashboard.php">← Voltar para o Dashboard</a>
+
+        <div class="header">
+            <h1>Alunos</h1>
+        </div>
+
+        <?php if ($mensagem): ?>
+            <div class="success"><?= htmlspecialchars($mensagem) ?></div>
+        <?php endif; ?>
+
+        <?php if ($erro): ?>
+            <div class="error"><?= htmlspecialchars($erro) ?></div>
+        <?php endif; ?>
+
+        <div class="card">
+            <h2>Cadastrar novo aluno</h2>
+            <form method="POST">
+                <div class="form-grid">
+                    <div class="field full">
+                        <label>Nome completo *</label>
+                        <input type="text" name="nome" placeholder="Digite o nome do aluno" required>
+                    </div>
+
+                    <div class="field">
+                        <label>CPF</label>
+                        <input type="text" name="cpf" placeholder="000.000.000-00">
+                    </div>
+
+                    <div class="field">
+                        <label>E-mail *</label>
+                        <input type="email" name="email" placeholder="aluno@email.com" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Senha *</label>
+                        <input type="password" name="senha" placeholder="Crie uma senha" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Plano *</label>
+                        <select name="plano_id" required>
+                            <option value="">Selecione o plano</option>
+                            <?php foreach ($planos as $plano): ?>
+                                <option value="<?= $plano["id"] ?>"><?= htmlspecialchars($plano["nome"]) ?> - R$ <?= number_format($plano["valor"], 2, ",", ".") ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <button class="btn" type="submit">Cadastrar aluno</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Alunos cadastrados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Plano</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($alunos as $aluno): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($aluno["nome"]) ?></td>
+                            <td><?= htmlspecialchars($aluno["email"]) ?></td>
+                            <td><?= htmlspecialchars($aluno["plano"] ?? "Sem plano") ?></td>
+                            <td>
+                                <?php if ($aluno["ativo"]): ?>
+                                    <span class="status">Ativo</span>
+                                <?php else: ?>
+                                    Inativo
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

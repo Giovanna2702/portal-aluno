@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Dashboard Administrativo - English Academy
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="dashboard.css"
+    >
+
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>
+                📚 English Academy
+            </h2>
+
+            <p>
+                Área Administrativa
+            </p>
+
+        </div>
+
+
+        <nav class="menu">
+
+            <a href="dashboard.php">
+                🏠 Dashboard
+            </a>
+
+            <a href="alunos.php">
+                👨‍🎓 Alunos
+            </a>
+
+            <a href="aulas.php">
+                📚 Aulas
+            </a>
+
+            <a href="exercicios.php">
+                📝 Exercícios
+            </a>
+
+            <a href="materiais.php">
+                📎 Materiais
+            </a>
+
+            <a href="avisos.php">
+                📢 Avisos
+            </a>
+
+            <a href="mensalidades.php">
+                💳 Mensalidades
+            </a>
+
+            <a href="configuracoes.php">
+                ⚙️ Configurações
+            </a>
+
+            <a
+                href="../login/logout.php"
+                class="sair"
+            >
+                🚪 Sair
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="conteudo">
+
+        <header class="topo">
+
+            <h1>
+                Olá,
+                <?= htmlspecialchars($_SESSION["nome"]) ?>!
+                👋
+            </h1>
+
+            <p>
+                Visão geral da operação do curso.
+            </p>
+
+        </header>
+
+
+        <section class="cards">
+
+            <article class="card">
+
+                <h3>
+                    Total de alunos
+                </h3>
+
+                <div class="numero">
+                    <?= $totalAlunos ?>
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <h3>
+                    Alunos ativos
+                </h3>
+
+                <div class="numero">
+                    <?= $alunosAtivos ?>
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <h3>
+                    Matrículas pagas
+                </h3>
+
+                <div class="numero">
+                    <?= $matriculasPagas ?>
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <h3>
+                    Progresso médio
+                </h3>
+
+                <div class="numero">
+                    <?= $progressoMedio ?>%
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <h3>
+                    Aulas
+                </h3>
+
+                <div class="numero">
+                    <?= $totalAulas ?>
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <h3>
+                    Exercícios
+                </h3>
+
+                <div class="numero">
+                    <?= $totalExercicios ?>
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <h3>
+                    Materiais
+                </h3>
+
+                <div class="numero">
+                    <?= $totalMateriais ?>
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <h3>
+                    Pendências financeiras
+                </h3>
+
+                <div class="numero">
+                    <?= $mensalidadesPendentes ?>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <section class="atalhos">
+
+            <a href="alunos.php">
+                Gerenciar alunos
+            </a>
+
+            <a href="aulas.php">
+                Gerenciar aulas
+            </a>
+
+            <a href="exercicios.php">
+                Gerenciar exercícios
+            </a>
+
+            <a href="materiais.php">
+                Gerenciar materiais
+            </a>
+
+            <a href="avisos.php">
+                Publicar avisos
+            </a>
+
+            <a href="mensalidades.php">
+                Controlar mensalidades
+            </a>
+
+        </section>
+
+
+        <section class="painel">
+
+            <div class="painel-topo">
+
+                <h2>
+                    Alunos recentes
+                </h2>
+
+
+                <div class="indicadores-menores">
+
+                    <span>
+                        <?= $totalModulos ?> módulos
+                    </span>
+
+                    <span>
+                        <?= $avisosAtivos ?> avisos ativos
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <?php if (!$alunosRecentes): ?>
+
+                <p>
+                    Nenhum aluno cadastrado.
+                </p>
+
+            <?php else: ?>
+
+                <div class="tabela-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Aluno</th>
+
+                                <th>Matrícula</th>
+
+                                <th>Acesso</th>
+
+                                <th>Progresso</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                        <?php foreach ($alunosRecentes as $aluno): ?>
+
+                            <tr>
+
+                                <td>
+
+                                    <?= htmlspecialchars(
+                                        $aluno["nome"]
+                                    ) ?>
+
+                                    <br>
+
+                                    <small>
+
+                                        <?= htmlspecialchars(
+                                            $aluno["email"]
+                                        ) ?>
+
+                                    </small>
+
+                                </td>
+
+
+                                <td>
+
+                                    <?= $aluno["matricula_paga"]
+                                        ? "Paga"
+                                        : "Pendente"
+                                    ?>
+
+                                </td>
+
+
+                                <td>
+
+                                    <?= $aluno["ativo"]
+                                        ? "Ativo"
+                                        : "Inativo"
+                                    ?>
+
+                                </td>
+
+
+                                <td>
+
+                                    <progress
+                                        value="<?=
+                                            (int)
+                                            $aluno["progresso"]
+                                        ?>"
+                                        max="100"
+                                    >
+                                    </progress>
+
+                                    <?= (int)
+                                        $aluno["progresso"]
+                                    ?>%
+
+                                </td>
+
+                            </tr>
+
+                        <?php endforeach; ?>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            <?php endif; ?>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
